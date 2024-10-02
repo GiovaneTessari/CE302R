@@ -134,8 +134,46 @@ proporcoes_relativas_linha
 proporcoes_relativas_coluna <- prop.table(tabela_contingencia, margin = 2)  # Proporções por linha
 proporcoes_relativas_coluna
 
+###EXERCICIOS
+
 # Lendo os dados de queimadas
-Queimadas_Q1 <- read.csv("data/FireWatch/Dataset_FireWatch_Brazil_Q1_2024.csv")
+Queimadas_Q1 <- read.csv("FireWatch/Dataset_FireWatch_Brazil_Q1_2024.csv")
 head(Queimadas_Q1)
+str(Queimadas_Q1)
+Queimadas_Q2 <- read.csv("FireWatch/Dataset_FireWatch_Brazil_Q2_2024.csv")
+head(Queimadas_Q2)
+str(Queimadas_Q2)
+Queimadas_Q3 <- read.csv("FireWatch/Dataset_FireWatch_Brazil_Q3_2024.csv")
+head(Queimadas_Q3)
+str(Queimadas_Q3)
+# Unindo os três bancos de dados
+Queimadas <- rbind(Queimadas_Q1, Queimadas_Q2, Queimadas_Q3)
+head(Queimadas)
+str(Queimadas)
+dim(Queimadas)
+
+write.csv(Queimadas, file = "data/FireWatch/Dataset_FireWatch_Brazil_2024.csv", row.names = FALSE)
+
+##EXERCIOS_PRATICA
+
+#1)Imprima na tela as 9 primeiras observações.
+head(Queimadas, n=9)
+#2)Imprima as últimas 3 observações.
+tail(Queimadas, n=3)
+#3)Quantas observações temos?
+nrow(Queimadas)
+#4)Quantas variáveis temos?
+ncol(Queimadas)
+#5)Apresente o sumário dos dados.
+summary(Queimadas)
+#6)Apresente a estrutura dos dados.
+str(Queimadas)
+#7)Quantos biomas estão sendo afetados?
+nrow(table(Queimadas$bioma))-1
+#8)Qual a média de avg_numero_dias_sem_chuva para os estados da região sul e da região norte?
+estados_do_sul = subset(Queimadas, estado == "PARANÁ" | estado == "SANTA CATARINA" | estado == "RIO GRANDE DO SUL" | estado == "RONDÔNIA" |
+estado == "RORAIMA" | estado == "AMAPÁ" | estado == "TOCANTINS" | estado == "ACRE" | estado == "AMAZONAS" | estado == "PARÁ")
+
+mean(estados_do_sul$avg_numero_dias_sem_chuva)
 
 
