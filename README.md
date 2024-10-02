@@ -176,4 +176,93 @@ estado == "RORAIMA" | estado == "AMAPÁ" | estado == "TOCANTINS" | estado == "AC
 
 mean(estados_do_sul$avg_numero_dias_sem_chuva)
 
+##Estruturas alternativas ao Data Frame
 
+library(data.table)
+
+# Criar um data.table
+meu_data_table <- data.table(
+  nome = c("Alice", "Bob", "Carol", "Ana", "João", "Carlos", "Patrícia", "Leonardo"),
+  idade = c(25, 30, 28, 20, 27, 50, 60, 45),
+  salario = c(5000, 6000, 5500, 8000, 2000, 3500, 10000, 3800 ), 
+  meio_de_transporte = c('onibus', 'bicicleta', 'onibus', 'carro', 'carro', 'onibus', 'onibus', 'bicicleta'))
+meu_data_table
+class(meu_data_table)
+# Importar um data.table e comparando o tempo de importação com o read.csv
+
+system.time(Queimadas <- fread("data/FireWatch/Dataset_FireWatch_Brazil_2024.csv"))
+system.time(Queimadas <- read.csv("data/FireWatch/Dataset_FireWatch_Brazil_2024.csv"))
+# Agregar dados 
+agregado <- meu_data_table[, .(media_salario = mean(salario)),]
+agregado
+# Agregar dados por idade
+agregado_idade <- meu_data_table[, .(media_salario = mean(salario)), by = idade]
+agregado_idade
+# Agregar dados por meio_de_transporte
+agregado_mt <- meu_data_table[, .(media_salario = mean(salario)), by = meio_de_transporte]
+agregado_mt
+ 
+##Tibble
+
+require(tibble)
+require(magrittr)
+require(dplyr)
+
+meu_tibble <- tibble(
+  nome = c("Alice", "Bob", "Carol", "Ana", "João", "Carlos", "Patrícia", "Leonardo"),
+  idade = c(25, 30, 28, 20, 27, 50, 60, 45),
+  salario = c(5000, 6000, 5500, 8000, 2000, 3500, 10000, 3800 ), 
+  meio_de_transporte = c('onibus', 'bicicleta', 'onibus', 'carro', 'carro', 'onibus', 'onibus', 'bicicleta'))
+meu_tibble
+
+glimpse(meu_tibble)
+
+meu_tibble$nova_coluna <- c(1, 2, 3, 4, 5, 6, 7, 8)
+meu_tibble
+
+meu_tibble <- mutate(meu_tibble, `minha coluna` = 1:8)
+meu_tibble <-  rename(meu_tibble, idade_anos = idade)
+meu_tibble
+
+meu_tibble_sem_salario <- select(meu_tibble, -salario)
+meu_tibble_sem_salario
+
+# Filtrar e ordenar
+resultado <- filter(meu_tibble, idade_anos > 25) 
+arrange(resultado, desc(salario))
+
+# Agregar por idade e calcular média de salários
+agregado_por_idade <-  group_by(meu_tibble, idade_anos) 
+
+summarize(agregado_por_idade, media_salario = mean(salario))
+# TEM UM ERRO AI 
+
+###LISTAS
+
+# Exemplo de criação de lista
+
+minha_lista <- list(
+  vetor = c(1, 2, 3, 4, 5),
+  matriz = matrix(1:9, nrow = 3),
+  data_frame = data.frame(
+    nome = c("Alice", "Bob", "Carol"),
+    idade = c(25, 30, 28)
+  ),
+  lista_aninhada = list(
+    vetor_aninhado = c(10, 20, 30),
+    matriz_aninhada = matrix(1:4, nrow = 2)
+  )
+)
+minha_lista
+
+# Acessar elementos da lista
+
+elemento1 <- minha_lista[[1]]  # Acessar o primeiro elemento
+
+elemento2 <- minha_lista$data_frame  # Acessar o data frame
+
+elemento3 <- minha_lista$lista_aninhada$vetor_aninhado  # Acessar o vetor aninhado
+
+elemento1
+elemento2
+elemento3
