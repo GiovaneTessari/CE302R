@@ -136,7 +136,7 @@ proporcoes_relativas_coluna
 
 ###EXERCICIOS
 
-# Lendo os dados de queimadas
+## Lendo os dados de queimadas
 Queimadas_Q1 <- read.csv("FireWatch/Dataset_FireWatch_Brazil_Q1_2024.csv")
 head(Queimadas_Q1)
 str(Queimadas_Q1)
@@ -146,7 +146,7 @@ str(Queimadas_Q2)
 Queimadas_Q3 <- read.csv("FireWatch/Dataset_FireWatch_Brazil_Q3_2024.csv")
 head(Queimadas_Q3)
 str(Queimadas_Q3)
-# Unindo os três bancos de dados
+## Unindo os três bancos de dados
 Queimadas <- rbind(Queimadas_Q1, Queimadas_Q2, Queimadas_Q3)
 head(Queimadas)
 str(Queimadas)
@@ -154,7 +154,7 @@ dim(Queimadas)
 
 write.csv(Queimadas, file = "data/FireWatch/Dataset_FireWatch_Brazil_2024.csv", row.names = FALSE)
 
-##EXERCIOS_PRATICA
+###EXERCIOS_PRATICA
 
 #1)Imprima na tela as 9 primeiras observações.
 head(Queimadas, n=9)
@@ -176,11 +176,11 @@ estado == "RORAIMA" | estado == "AMAPÁ" | estado == "TOCANTINS" | estado == "AC
 
 mean(estados_do_sul$avg_numero_dias_sem_chuva)
 
-##Estruturas alternativas ao Data Frame
+###Estruturas alternativas ao Data Frame
 
 library(data.table)
 
-# Criar um data.table
+## Criar um data.table
 meu_data_table <- data.table(
   nome = c("Alice", "Bob", "Carol", "Ana", "João", "Carlos", "Patrícia", "Leonardo"),
   idade = c(25, 30, 28, 20, 27, 50, 60, 45),
@@ -188,21 +188,21 @@ meu_data_table <- data.table(
   meio_de_transporte = c('onibus', 'bicicleta', 'onibus', 'carro', 'carro', 'onibus', 'onibus', 'bicicleta'))
 meu_data_table
 class(meu_data_table)
-# Importar um data.table e comparando o tempo de importação com o read.csv
+## Importar um data.table e comparando o tempo de importação com o read.csv
 
 system.time(Queimadas <- fread("data/FireWatch/Dataset_FireWatch_Brazil_2024.csv"))
 system.time(Queimadas <- read.csv("data/FireWatch/Dataset_FireWatch_Brazil_2024.csv"))
-# Agregar dados 
+## Agregar dados 
 agregado <- meu_data_table[, .(media_salario = mean(salario)),]
 agregado
-# Agregar dados por idade
+## Agregar dados por idade
 agregado_idade <- meu_data_table[, .(media_salario = mean(salario)), by = idade]
 agregado_idade
-# Agregar dados por meio_de_transporte
+## Agregar dados por meio_de_transporte
 agregado_mt <- meu_data_table[, .(media_salario = mean(salario)), by = meio_de_transporte]
 agregado_mt
  
-##Tibble
+###Tibble
 
 require(tibble)
 require(magrittr)
@@ -227,11 +227,11 @@ meu_tibble
 meu_tibble_sem_salario <- select(meu_tibble, -salario)
 meu_tibble_sem_salario
 
-# Filtrar e ordenar
+## Filtrar e ordenar
 resultado <- filter(meu_tibble, idade_anos > 25) 
 arrange(resultado, desc(salario))
 
-# Agregar por idade e calcular média de salários
+## Agregar por idade e calcular média de salários
 agregado_por_idade <-  group_by(meu_tibble, idade_anos) 
 
 summarize(agregado_por_idade, media_salario = mean(salario))
@@ -266,3 +266,5 @@ elemento3 <- minha_lista$lista_aninhada$vetor_aninhado  # Acessar o vetor aninha
 elemento1
 elemento2
 elemento3
+
+
